@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./CSS/styles.css">
+    <title>Turing Machine Simulator</title>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <h1>Turing Machine Simulator</h1>
+            <p>Theory of Computation - Final Project</p>
+        </nav>
+    </header>
+
+    <main>
+        <section id="select">
+            <fieldset>
+                <legend>1. Select a Turing Machine</legend>
+
+                <div class="machine-option">
+                    <input type="radio" name="machine" id="machine1" value="binary">
+                    <label for="machine1">
+                        <strong>Binary Increment</strong>
+                        <p>Adds 1 to a binary number.</p>
+                        <small>Example: 101 + 1 = 110</small>
+                    </label>
+                </div>
+
+                <div class="machine-option">
+                    <input type="radio" name="machine" id="machine2" value="multiplication" checked>
+                    <label for="machine2">
+                        <strong>Integer Multiplication</strong>
+                        <p>Multiplies two integers in unary.</p>
+                        <small>Example: 3 x 4 = 11101111</small>
+                    </label>
+                </div>
+
+                <div class="machine-option">
+                    <input type="radio" name="machine" id="machine3" value="addition">
+                    <label for="machine3">
+                        <strong>Unary Addition</strong>
+                        <p>Adds two unary numbers.</p>
+                        <small>Example: 111011 = 11111</small>
+                    </label>
+                </div>
+            </fieldset>
+
+            <section id="input-section">
+                <h2>2. Input String</h2>
+
+                <label for="input_string">Machine Input</label>
+
+                <input type="text" name="input_string" id="input_string" placeholder="Enter a string" value="11101111">
+
+                <p id="input-example">Example: 3 x 4 = 11101111</p>
+            </section>
+
+            <section id="settings">
+                <h2>3. Execution Settings</h2>
+
+                <label for="max-steps">Max Steps:</label>
+                <input type="number" id="max-steps"
+                       value="10000" min="1">
+
+                <label for="speed">Speed:</label>
+                <input type="range" id="speed"
+                       min="1" max="10" value="5">
+                <output id="speed-value" for="speed">5 steps/s</output>
+            </section>
+
+            <section id="actions">
+                <button type="button" id="run-btn">Run</button>
+                <button type="button" id="reset-btn">Reset</button>
+                <button type="button" id="load-btn">Load JSON</button>
+
+                <input type="file" id="json-file"
+                       accept=".json,application/json" hidden>
+            </section>
+        </section>
+
+        <section id="simulator">
+
+            <section id="machine-info">
+                <h2 id="machine-title">
+                    Integer Multiplication (Unary)
+                </h2>
+
+                <p id="machine-description">
+                    Turing Machine that multiplies two unary numbers.
+                </p>
+
+                <div id="machine-status">
+                    <p>Current State: <output id="current-state">q0</output></p>
+                    <p>Step: <output id="step-count">0</output></p>
+                    <p>Status: <output id="status">Ready</output></p>
+                </div>
+            </section>
+
+            <section id="tape">
+                <h3>Tape:</h3>
+                <div id="tape-content"></div>
+            </section>
+
+            <section id="inside_setting">
+                <button type="button" id="pause-btn">Pause</button>
+                <button type="button" id="play-btn">Play</button>
+                <button type="button" id="step-btn">Step</button>
+            </section>
+
+            <section id="trace">
+                <h3>Execution Trace (Transition Log)</h3>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Step</th>
+                                <th>Current State</th>
+                                <th>Read</th>
+                                <th>Write</th>
+                                <th>Move</th>
+                                <th>Next State</th>
+                                <th>Tape (window)</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="trace-body"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="terminal">
+                <h3>ASCII Execution (Terminal View)</h3>
+                <pre id="terminal-content"></pre>
+            </section>
+
+        </section>
+    </main>
+
+    <script type="module" src="./js/turingMachine.js"></script>
+</body>
+</html>
