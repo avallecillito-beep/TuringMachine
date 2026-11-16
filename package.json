@@ -1,0 +1,9 @@
+
+{
+    "name": "turing-machine-simulator",
+    "version": "1.0.0",
+    "type": "module",
+    "scripts": {
+        "test": "node JS/test.js"
+    }
+}
