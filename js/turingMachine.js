@@ -17,6 +17,7 @@ export class TuringMachine {
         this.currentState = this.startState;
         this.steps = 0;
         this.status = "Ready";
+        this.maxSteps = 10000;
 
         this.validateConfig();
         this.validateInput(input);
@@ -52,7 +53,7 @@ export class TuringMachine {
 
             if (!this.inputAlphabet.includes(symbol)) {
                 throw new Error(
-                    `Invalid input symbol use 0 or 1: ${symbol}`
+                    `Invalid input symbol: ${symbol}. Allowed symbols: ${this.inputAlphabet.join(", ")}`
                 );
             }
 

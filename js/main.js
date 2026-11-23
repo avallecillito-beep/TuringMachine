@@ -1,4 +1,3 @@
-
 import { TuringMachine } from "./turingMachine.js";
 import {renderTape, renderMachineStatus, renderTrace, renderTerminal} from "./visualizer.js";
 import { setupControls } from "./controls.js";
@@ -71,7 +70,7 @@ function initializeMachine() {
         for (const symbol of input) {
 
             if (!config.inputAlphabet.includes(symbol)) {
-                throw new Error(`Invalid input symbol: ${symbol}`);
+                throw new Error(`Invalid input symbol: ${symbol}. Allowed symbols: ${config.inputAlphabet.join(", ")}`);
             }
 
         }

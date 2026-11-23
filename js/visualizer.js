@@ -7,7 +7,7 @@ export function renderTape(machine) {
         return;
     }
 
-    tapeContainer.innerHTML = "";
+    tapeContainer.replaceChildren();
 
     const positions = [...machine.tape.keys()];
 
@@ -25,19 +25,33 @@ export function renderTape(machine) {
 
     for (let i = minPosition; i <= maxPosition; i++) {
 
-        const cell = document.createElement("div");
+        const cellWrapper = document.createElement("div");
+        cellWrapper.classList.add("tape-cell-wrapper");
 
+        const cell = document.createElement("div");
         cell.classList.add("tape-cell");
 
         const symbol = machine.tape.get(i) ?? machine.blank;
-
         cell.textContent = symbol;
 
         if (i === machine.head) {
+
             cell.classList.add("active");
+
+            const headIndicator = document.createElement("div");
+            headIndicator.classList.add("head-indicator");
+            headIndicator.textContent = "▲";
+
+            cellWrapper.appendChild(cell);
+            cellWrapper.appendChild(headIndicator);
+
+        } else {
+
+            cellWrapper.appendChild(cell);
+
         }
 
-        tapeContainer.appendChild(cell);
+        tapeContainer.appendChild(cellWrapper);
     }
 }
 

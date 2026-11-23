@@ -1,91 +1,330 @@
 
+/* ========================================
+   1. GLOBAL VARIABLES
+======================================== */
+
 :root {
-    --navy: #1d3153;
-    --blue: #0866f5;
-    --blue-light: #eaf1ff;
-    --border: #cbd5e5;
-    --background: #f5f7fc;
-    --white: #ffffff;
-    --text: #111a32;
-    --muted: #526078;
-    --green: #16804a;
+    --navy: #1E3255;
+    --blue: #0866F5;
+    --blue-light: #EAF1FF;
+
+    --border: #CFD9EB;
+    --background: #F3F6FC;
+    --white: #FFFFFF;
+
+    --text: #17213B;
+    --muted: #61718D;
+
+    --green: #16834A;
+
+    --pause: #F4B544;
+    --pause-text: #49300B;
 }
 
+/* ========================================
+   2. GLOBAL STYLES
+======================================== */
+
 * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background: var(--background);
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: var(--background);
     color: var(--text);
+    line-height: 1.5;
 }
 
-/* HEADER */
+button,
+input {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+    margin-top: 0;
+}
+
+/* ========================================
+   3. HEADER
+======================================== */
 
 header {
-    background: var(--navy);
+    background-color: var(--navy);
     color: var(--white);
-    padding: 25px 35px;
+    padding: 20px 32px;
 }
 
-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-nav h1 {
+.header-content h1 {
+    margin-bottom: 4px;
     font-size: 28px;
 }
 
-/* MAIN LAYOUT */
+.header-content p {
+    margin: 0;
+    color: #C5D2E7;
+    font-size: 13px;
+}
+
+/* ========================================
+   4. MAIN LAYOUT
+======================================== */
 
 main {
     display: grid;
+
     grid-template-columns: 400px minmax(0, 1fr);
-    gap: 15px;
+
+    grid-template-areas:
+        "guide preset"
+        "controls simulator";
+
+    gap: 16px 18px;
     padding: 20px;
+    align-items: stretch;
 }
 
-#select, #simulator {
-    background: var(--white);
+#quick-guide {
+    grid-area: guide;
+}
+
+#preset-guide {
+    grid-area: preset;
+}
+
+#select {
+    grid-area: controls;
+}
+
+#simulator {
+    grid-area: simulator;
+}
+
+#select,
+#simulator {
+    background-color: var(--white);
     border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 20px;
+    border-radius: 14px;
     min-width: 0;
 }
 
-#select, #simulator {
+#select {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 13px;
+    padding: 18px;
 }
 
-/* MACHINE SELECTION */
-
-fieldset {
-    border: none;
+#simulator {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    padding: 22px;
 }
 
-legend {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 15px;
+/* ========================================
+   5. TOP INFORMATION CARDS
+======================================== */
+
+#quick-guide,
+#preset-guide {
+    min-width: 0;
+    min-height: 125px;
+    padding: 18px 22px;
+    border-radius: 12px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 9px;
+}
+
+/* General instructions */
+
+#quick-guide {
+    background-color: var(--blue-light);
+    border: 1px solid #C7D9FF;
+}
+
+.section-heading {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+}
+
+.section-heading h2 {
+    margin: 0;
+    font-size: 19px;
+    color: var(--navy);
+}
+
+.section-heading small {
+    color: var(--blue);
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.guide-definition {
+    flex: none;
+    margin: 0;
+    color: var(--text);
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.guide-steps {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 6px 16px;
+}
+
+.guide-steps p {
+    margin: 0;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.guide-steps strong {
+    color: var(--blue);
+}
+
+.guide-more {
+    margin-top: 3px;
+    padding: 0;
+}
+
+.guide-more summary {
+    color: var(--blue);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.guide-more p {
+    margin: 8px 0 0;
+    font-size: 12px;
+    color: var(--muted);
+}
+
+/* Selected preset information */
+
+#preset-guide {
+    background-color: var(--white);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--blue);
+}
+
+#preset-guide h3 {
+    margin: 0;
+    color: var(--navy);
+    font-size: 17px;
+}
+
+.preset-info {
+    display: none;
+}
+
+.preset-info h4 {
+    display: block;
+    margin: 0 0 4px;
+    color: var(--blue);
+    font-size: 15px;
+}
+
+.preset-info p {
+    display: block;
+    margin: 0 0 5px;
+    color: var(--text);
+    font-size: 13px;
+}
+
+.preset-info small {
+    display: block;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+/* ========================================
+   6. PRESET SELECTION LOGIC
+======================================== */
+
+/* Only show the currently selected preset */
+
+main:has(#machine1:checked):not(.custom-mode)
+.preset-info[data-preset="binary"] {
+    display: block;
+}
+
+main:has(#machine2:checked):not(.custom-mode)
+.preset-info[data-preset="multiplication"] {
+    display: block;
+}
+
+main:has(#machine3:checked):not(.custom-mode)
+.preset-info[data-preset="addition"] {
+    display: block;
+}
+
+/* Custom mode */
+
+main.custom-mode .preset-info {
+    display: none;
+}
+
+main.custom-mode
+.preset-info[data-preset="custom"] {
+    display: block;
+}
+
+/* ========================================
+   7. MACHINE SELECTION
+======================================== */
+
+#machine-selection {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    min-width: 0;
+}
+
+#machine-selection legend {
+    margin-bottom: 10px;
+    padding: 0;
+    color: var(--navy);
+    font-size: 18px;
+    font-weight: 700;
 }
 
 .machine-option {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 15px;
-    margin-bottom: 12px;
+    gap: 10px;
+
+    padding: 10px 12px;
+    margin-bottom: 7px;
+
     border: 1px solid var(--border);
-    border-radius: 8px;
-    cursor: pointer;
-    transition: transform 0.2s;
+    border-radius: 10px;
+    background-color: var(--white);
+
+    transition: transform 0.2s ease;
 }
 
 .machine-option:hover {
@@ -94,411 +333,604 @@ legend {
 
 .machine-option:has(input:checked) {
     border: 2px solid var(--blue);
-    background: var(--blue-light);
+    background-color: var(--blue-light);
+    padding: 9px 11px;
 }
 
-.machine-option input {
+.machine-option input[type="radio"] {
     accent-color: var(--blue);
     width: 18px;
     height: 18px;
+    margin: 0;
     flex-shrink: 0;
+    cursor: pointer;
 }
 
 .machine-option label {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
     flex: 1;
     cursor: pointer;
 }
 
 .machine-option strong {
-    font-size: 16px;
-}
-
-.machine-option p {
-    margin: 7px 0;
+    color: var(--navy);
     font-size: 14px;
 }
 
 .machine-option small {
     color: var(--muted);
+    font-size: 11px;
 }
 
-/* INPUT AND SETTINGS */
+/* ========================================
+   8. LEFT PANEL SECTIONS
+======================================== */
 
-#input-section, #settings, #actions {
+#input-section,
+#settings,
+#actions,
+.custom-machine-section {
     border-top: 1px solid var(--border);
-    padding-top: 20px;
+    padding-top: 13px;
 }
 
-#input-section h2, #settings h2 {
-    font-size: 19px;
-    margin-bottom: 15px;
+/* ========================================
+   9. INPUT STRING
+======================================== */
+
+#input-section h2,
+#settings h2 {
+    margin-bottom: 10px;
+    color: var(--navy);
+    font-size: 17px;
 }
 
-#input-section label {
+#input-section label,
+.custom-machine-section label {
     display: block;
-    margin-bottom: 8px;
+    margin-bottom: 7px;
+    font-size: 13px;
+    font-weight: 600;
 }
 
 #input_string {
     width: 100%;
-    padding: 12px;
+    padding: 9px 12px;
+
     border: 1px solid var(--border);
-    border-radius: 7px;
-    font-size: 18px;
+    border-radius: 8px;
+
+    background-color: var(--white);
+    color: var(--text);
+    font-size: 17px;
+    outline: none;
 }
 
 #input_string:focus {
-    outline: 2px solid var(--blue);
+    border-color: var(--blue);
 }
 
 #input-example {
-    margin-top: 10px;
-    font-size: 13px;
+    margin: 5px 0 0;
     color: var(--muted);
+    font-size: 12px;
 }
+
+/* ========================================
+   10. EXECUTION SETTINGS
+======================================== */
 
 #settings {
-    display: grid;
-    grid-template-columns: 100px 1fr;
-    gap: 15px;
-    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
 }
 
-#settings h2 {
-    grid-column: 1 / 3;
+.setting-row {
+    display: grid;
+    grid-template-columns: 110px minmax(0, 1fr);
+    align-items: start;
+    gap: 8px;
+}
+
+.setting-row label {
+    padding-top: 8px;
+    font-size: 14px;
+    font-weight: 500;
 }
 
 #max-steps {
-    width: 120px;
-    padding: 8px;
+    width: 135px;
+    max-width: 100%;
+    padding: 6px 9px;
+
     border: 1px solid var(--border);
-    border-radius: 6px;
+    border-radius: 7px;
+    color: var(--text);
+}
+
+.speed-control {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 }
 
 #speed {
     width: 100%;
+    margin: 8px 0;
     accent-color: var(--blue);
+    cursor: pointer;
 }
 
 #speed-value {
-    grid-column: 2;
-    font-size: 13px;
     color: var(--muted);
+    font-size: 12px;
 }
 
-/* BUTTONS */
+/* ========================================
+   11. RUN AND RESET
+======================================== */
 
+#actions {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
 
-/* Custom Machine Section */
+#actions button {
+    flex: 1;
+    width: auto;
+    padding: 9px 12px;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+#run-btn {
+    background-color: var(--green);
+    color: var(--white);
+    border: 1px solid var(--green);
+}
+
+#reset-btn {
+    background-color: var(--white);
+    color: var(--navy);
+    border: 1px solid var(--border);
+}
+
+/* ========================================
+   12. CUSTOM TURING MACHINE
+======================================== */
 
 .custom-machine-section {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    margin-top: 20px;
-    padding-top: 20px;
-    border-top: 1px solid var(--border);
+    gap: 8px;
 }
 
 .custom-machine-section h3 {
-    color: var(--navy);
     margin: 0;
+    color: var(--navy);
+    font-size: 17px;
 }
 
 .custom-machine-section p {
+    margin: 0 0 4px;
     color: var(--muted);
-    font-size: 14px;
+    font-size: 12px;
+}
+
+.custom-machine-section label {
+    margin: 0;
 }
 
 #json-file {
     width: 100%;
-    padding: 12px;
+    padding: 7px;
+
     border: 1px solid var(--border);
     border-radius: 8px;
+
     background-color: var(--white);
     color: var(--text);
-    cursor: pointer;
+    font-size: 12px;
 }
 
 #json-file::file-selector-button {
+    padding: 8px 10px;
+    margin-right: 8px;
+
     background-color: var(--blue-light);
     color: var(--navy);
+
     border: 1px solid var(--border);
     border-radius: 6px;
-    padding: 8px 12px;
-    margin-right: 12px;
     cursor: pointer;
 }
 
 #load-btn {
+    padding: 10px;
     background-color: var(--blue);
     color: var(--white);
-    border: none;
+
+    border: 1px solid var(--blue);
     border-radius: 8px;
-    padding: 12px 18px;
     font-weight: 600;
-    cursor: pointer;
 }
 
-button {
-    padding: 12px 18px;
-    border: 1px solid var(--border);
+/* ========================================
+   13. MACHINE INFORMATION
+======================================== */
+
+.machine-information {
+    margin-bottom: 18px;
+}
+
+.machine-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+#machine-title {
+    margin: 0;
+    color: var(--navy);
+    font-size: 24px;
+}
+
+#machine-type {
+    display: inline-block;
+    padding: 6px 11px;
+
+    background-color: var(--blue-light);
+    color: var(--blue);
+
     border-radius: 7px;
-    background: #f2f5fc;
-    color: var(--text);
-    cursor: pointer;
-    font-size: 15px;
+    font-size: 12px;
+    font-weight: 600;
 }
 
-button:hover {
-    background: var(--blue-light);
-}
-
-button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-#actions {
+.machine-details {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 10px;
 }
 
-#run-btn {
-    grid-column: 1 / 3;
-    background: var(--green);
-    color: var(--white);
+.machine-details:empty {
+    display: none;
 }
 
-#run-btn:hover {
-    background: #096638;
+.machine-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    padding: 11px;
+
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background-color: var(--background);
+    min-width: 0;
 }
 
-#reset-btn {
-    grid-column: 1 / 3;
-    background: var(--white);
-    color: var(--text);
-}
-
-#reset-btn:hover {
-    background: #c5cac7;
-}
-
-/* MACHINE INFORMATION */
-
-#machine-info h2 {
-    font-size: 23px;
-    margin-bottom: 8px;
-}
-
-#machine-description {
+.machine-detail small {
     color: var(--muted);
-    line-height: 1.5;
+    font-size: 11px;
 }
+
+.machine-detail strong {
+    color: var(--navy);
+    font-size: 13px;
+    overflow-wrap: anywhere;
+}
+
+/* ========================================
+   14. MACHINE STATUS
+======================================== */
 
 #machine-status {
     display: flex;
     flex-wrap: wrap;
-    gap: 15px;
-    margin-top: 20px;
+    gap: 12px;
 }
 
 #machine-status p {
-    background: var(--blue-light);
-    color: #164a99;
-    padding: 12px;
+    margin: 0;
+    padding: 10px 13px;
+
+    background-color: var(--blue-light);
+    color: var(--navy);
+
     border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
 }
 
 #machine-status p:nth-child(2) {
-    background: #eee8ff;
-    color: #55419c;
+    background-color: #EFE8FF;
+    color: #553A9A;
 }
 
 #machine-status p:nth-child(3) {
-    background: #e6f7e9;
-    color: #176b37;
+    background-color: #E5F6EB;
+    color: #126238;
 }
 
-/* TURING MACHINE TAPE */
+#machine-status output {
+    font-weight: 700;
+}
+
+/* ========================================
+   15. TAPE VISUALIZATION
+======================================== */
 
 #tape {
-    background: #f2f5fb;
-    border: 1px solid var(--border);
-    border-radius: 10px;
+    min-width: 0;
+    min-height: 175px;
     padding: 20px;
+
+    background-color: var(--background);
+    border: 1px solid var(--border);
+    border-radius: 12px;
 }
 
 #tape h3 {
-    margin-bottom: 15px;
+    margin-bottom: 16px;
+    color: var(--navy);
+    font-size: 19px;
 }
 
 #tape-content {
     display: flex;
-    gap: 5px;
+    align-items: flex-start;
+    gap: 6px;
+
     overflow-x: auto;
-    padding: 15px 5px 30px;
-    min-height: 100px;
+    padding: 8px 0 16px;
+    min-height: 85px;
+}
+
+.tape-cell-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    flex: 0 0 auto;
 }
 
 .tape-cell {
-    min-width: 45px;
-    height: 45px;
+    width: 54px;
+    height: 54px;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
     border: 1px solid var(--border);
-    border-radius: 6px;
+    border-radius: 7px;
+
     background-color: var(--white);
-    font-weight: bold;
+    color: var(--navy);
+
+    font-size: 18px;
+    font-weight: 700;
 }
 
 .tape-cell.active {
     border: 2px solid var(--blue);
-    background: #dbe9ff;
+    background-color: var(--blue-light);
 }
 
-.tape-cell.active::after {
-    content: "▲";
-    position: absolute;
-    bottom: -25px;
+.head-indicator {
+    position: static;
     color: var(--blue);
+    font-size: 17px;
+    line-height: 1;
 }
 
-/* PLAYBACK CONTROLS */
+/* ========================================
+   16. PLAYBACK CONTROLS
+======================================== */
+
+#inside_setting {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+#inside_setting button {
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+}
 
 #play-btn {
     background-color: var(--blue);
     color: var(--white);
     border: 1px solid var(--blue);
-    font-weight: 600;
-    cursor: pointer;
-}
-
-#play-btn:hover {
-    border-color: #eeeae2;
-}
-
-#inside_setting {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
 }
 
 #pause-btn {
-    background-color: #F4B544;
-    color: #49300B;
+    background-color: var(--pause);
+    color: var(--pause-text);
     border: 1px solid #E3A32E;
-    font-weight: 600;
-    cursor: pointer;
-}
-
-#pause-btn:hover {
-    border-color: #eeeae2;
 }
 
 #step-btn {
     background-color: #F0F4FA;
     color: var(--navy);
     border: 1px solid var(--border);
-    font-weight: 600;
-    cursor: pointer;
 }
 
-#step-btn:hover {
-    border-color: #eeeae2;
-}
-/* EXECUTION TRACE */
+/* ========================================
+   17. EXECUTION TRACE
+======================================== */
 
-#trace, #terminal {
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 15px;
+#trace,
+#terminal {
     min-width: 0;
+    padding: 18px;
+
+    border: 1px solid var(--border);
+    border-radius: 12px;
 }
 
-#trace h3, #terminal h3 {
+#trace h3,
+#terminal h3 {
     margin-bottom: 15px;
+    color: var(--navy);
+    font-size: 19px;
 }
 
 .table-container {
-    overflow: auto;
-    max-height: 350px;
+    width: 100%;
+    overflow-x: auto;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
-    text-align: center;
     font-size: 13px;
-}
-
-th, td {
-    border: 1px solid var(--border);
-    padding: 10px;
     white-space: nowrap;
 }
 
+th,
+td {
+    padding: 11px 12px;
+    border: 1px solid var(--border);
+    text-align: center;
+}
+
 th {
-    background: #edf1f9;
+    background-color: #EAF0FA;
+    color: var(--navy);
+    font-weight: 700;
 }
 
-tbody tr:hover {
-    background: var(--blue-light);
+td {
+    color: var(--text);
 }
 
-tbody tr.selected-step {
-    background: #dceaff;
+tbody tr:nth-child(even) {
+    background-color: #F8FAFE;
 }
 
-tbody tr.accepted {
-    background: #ddf9e4;
-}
-
-/* ASCII TERMINAL */
+/* ========================================
+   18. ASCII TERMINAL
+======================================== */
 
 #terminal-content {
-    background: #171f2e;
-    color: var(--white);
+    margin: 0;
     padding: 20px;
-    border-radius: 8px;
-    font-family: Consolas, monospace;
-    font-size: 14px;
-    line-height: 1.6;
-    min-height: 150px;
+    min-height: 180px;
+
+    background-color: #171F30;
+    color: #F4F7FC;
+
+    border-radius: 9px;
+
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 13px;
+    line-height: 1.8;
+
     overflow-x: auto;
     white-space: pre;
 }
 
-/* Media Query */
+/* ========================================
+   19. RESPONSIVE DESIGN
+======================================== */
 
-@media (max-width: 900px) {
+@media (max-width: 1050px) {
+
     main {
-        grid-template-columns: 1fr;
+        grid-template-columns: 340px minmax(0, 1fr);
     }
 
-    nav {
-        flex-direction: column;
-        gap: 10px;
+    .machine-details {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 800px) {
+
     main {
-        padding: 10px;
+        grid-template-columns: 1fr;
+
+        grid-template-areas:
+            "guide"
+            "preset"
+            "controls"
+            "simulator";
+
+        align-items: start;
     }
 
-    #select, #simulator {
+    #quick-guide,
+    #preset-guide {
+        min-height: auto;
+    }
+
+    #select,
+    #simulator {
+        padding: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    header {
+        padding: 18px;
+    }
+
+    .header-content h1 {
+        font-size: 22px;
+    }
+
+    main {
         padding: 12px;
+        gap: 12px;
     }
 
-    #inside_setting button {
-        flex: 1;
+    #quick-guide,
+    #preset-guide {
+        padding: 14px;
+    }
+
+    .guide-steps {
+        flex-direction: column;
+    }
+
+    #select {
+        padding: 14px;
+    }
+
+    #actions {
+        flex-direction: column;
+    }
+
+    #actions button {
+        width: 100%;
+    }
+
+    .machine-details {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    #machine-title {
+        font-size: 21px;
     }
 
     .tape-cell {
-        flex-basis: 43px;
-        height: 43px;
+        width: 46px;
+        height: 46px;
+    }
+
+    #inside_setting button {
+        padding: 10px 15px;
     }
 }
