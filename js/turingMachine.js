@@ -109,6 +109,12 @@ export class TuringMachine {
         } else {
             this.status = "Running";
         }
+        if (
+            this.status === "Running" &&
+            this.steps >= this.maxSteps
+        ) {
+            this.status = "Step Limit Reached";
+        }
 
                 
         const traceEntry = {
