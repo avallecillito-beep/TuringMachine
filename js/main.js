@@ -1,11 +1,12 @@
 
 import { TuringMachine } from "./turingMachine.js";
-import { renderTape, renderMachineStatus} from "./visualizer.js";
+import {renderTape, renderMachineStatus, renderTrace, renderTerminal} from "./visualizer.js";
 import { setupControls } from "./controls.js";
+import {readMachineFile, validateMachineConfig} from "./jsonLoader.js";
 
 let presets = {};
-
 let machine = null;
+let customConfig = null;
 
 const defaultInputs = {
     binary: "1011",
@@ -51,46 +52,97 @@ function getSelectedMachine() {
 }
 
 
+
 function initializeMachine() {
 
     const selectedMachine = getSelectedMachine();
 
-    if (!selectedMachine) {
-        console.error("No machine selected");
-        return;
-    }
-
-    const config = presets[selectedMachine];
+    const config = customConfig ?? presets[selectedMachine];
 
     if (!config) {
         console.error("Machine configuration not found");
-        return;
+        return false;
     }
 
     const input = inputString.value.trim();
 
     try {
 
-        machine = new TuringMachine(config, input);
-        const maxStepsInput = document.getElementById("max-steps");
+        for (const symbol of input) {
 
+            if (!config.inputAlphabet.includes(symbol)) {
+                throw new Error(`Invalid input symbol: ${symbol}`);
+            }
+
+        }
+
+        const maxStepsInput = document.getElementById("max-steps");
         const maxSteps = Number(maxStepsInput.value);
 
         if (!Number.isInteger(maxSteps) || maxSteps < 1) {
             throw new Error("Max Steps must be a positive integer");
         }
 
+        machine = new TuringMachine(config, input);
+
         machine.maxSteps = maxSteps;
 
+        // 8. Update all visualizations
         renderTape(machine);
         renderMachineStatus(machine);
+        renderTrace(machine);
+        renderTerminal(machine);
 
-        console.log("Machine initialized:", config.name);
+        console.log(
+            "Machine initialized:",
+            config.name ?? "Unnamed Machine"
+        );
+
         console.log("Input:", input);
+
+        return true;
 
     } catch (error) {
 
+        machine = null;
+
         console.error("Initialization error:", error.message);
+
+        alert(error.message);
+
+        return false;
+    }
+}
+
+
+
+async function loadCustomMachine(pauseExecution) {
+
+    const fileInput = document.getElementById("json-file");
+    const file = fileInput.files[0];
+
+    try {
+
+        const config = await readMachineFile(file);
+
+        validateMachineConfig(config);
+
+        pauseExecution();
+
+        customConfig = config;
+
+        console.log(
+            "Custom machine loaded:",
+            config.name ?? "Unnamed Machine"
+        );
+
+        initializeMachine();
+
+    } catch (error) {
+
+        console.error("Custom JSON error:", error.message);
+
+        alert(error.message);
 
     }
 }
@@ -112,12 +164,20 @@ async function main() {
         () => machine,
         initializeMachine
     );
+    
+    const loadButton = document.getElementById("load-btn");
+
+    loadButton.addEventListener("click", () => {
+        loadCustomMachine(controls.pause);
+    });
 
     machineOptions.forEach(option => {
 
         option.addEventListener("change", () => {
 
             controls.pause();
+
+            customConfig = null;
 
             const selected = getSelectedMachine();
 
@@ -128,8 +188,8 @@ async function main() {
         });
 
     });
-
 }
+
 
 main();
 

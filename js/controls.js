@@ -1,7 +1,8 @@
-
 import {
     renderTape,
-    renderMachineStatus
+    renderMachineStatus,
+    renderTrace,
+    renderTerminal
 } from "./visualizer.js";
 
 export function setupControls(getMachine, initializeMachine) {
@@ -28,6 +29,8 @@ export function setupControls(getMachine, initializeMachine) {
 
         renderTape(machine);
         renderMachineStatus(machine);
+        renderTrace(machine);
+        renderTerminal(machine);
     }
 
     function pause() {

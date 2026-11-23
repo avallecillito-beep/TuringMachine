@@ -75,11 +75,29 @@
             <section id="actions">
                 <button type="button" id="run-btn">Run</button>
                 <button type="button" id="reset-btn">Reset</button>
-                <button type="button" id="load-btn">Load JSON</button>
-
-                <input type="file" id="json-file"
-                       accept=".json,application/json" hidden>
             </section>
+            <section class="custom-machine-section">
+
+                    <h3>4. Custom Turing Machine</h3>
+
+                    <p>
+                        Upload a JSON file to execute your own
+                        Turing Machine configuration.
+                    </p>
+
+                    <label for="json-file">Select JSON File</label>
+
+                    <input
+                        type="file"
+                        id="json-file"
+                        accept=".json,application/json"
+                    >
+
+                    <button id="load-btn" type="button">
+                        Load JSON
+                    </button>
+
+                </section>
         </section>
 
         <section id="simulator">
@@ -106,8 +124,8 @@
             </section>
 
             <section id="inside_setting">
-                <button type="button" id="pause-btn">Pause</button>
                 <button type="button" id="play-btn">Play</button>
+                <button type="button" id="pause-btn">Pause</button>
                 <button type="button" id="step-btn">Step</button>
             </section>
 
