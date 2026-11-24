@@ -1,0 +1,376 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>Turing Machine Simulator</title>
+  <script type="module" crossorigin src="/assets/index-ByzyCdoP.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-DZamBObl.css">
+</head>
+
+<body>
+
+    <header>
+        <nav>
+            <div class="header-content">
+                <h1>Turing Machine Simulator</h1>
+                <p>Theory of Computation - Final Project</p>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+
+        <section id="quick-guide">
+
+            <div class="section-heading">
+                <h2>Quick Start</h2>
+                <small>Beginner Guide</small>
+            </div>
+
+            <p class="guide-definition">
+                A <strong>Turing Machine</strong> is a model 
+                ofcomputation that reads and writes symbols on atape, 
+                following a set of rules. This machines can onlyread 
+                1 or 0 symbols, and the tape is infinite in both directions.
+            </p>
+
+            <div class="guide-steps">
+                <p><strong>1.</strong> Choose a machine.</p>
+                <p><strong>2.</strong> Enter an input.</p>
+                <p><strong>3.</strong> Press Play or Step.</p>
+            </div>
+
+            <details class="guide-more">
+                <summary>Learn about the controls</summary>
+
+                <p><strong>Run:</strong> Start a new execution.</p>
+                <p><strong>Play:</strong> Continue automatically.</p>
+                <p><strong>Pause:</strong> Stop temporarily.</p>
+                <p><strong>Step:</strong> Execute one transition.</p>
+                <p><strong>Reset:</strong> Restart the machine.</p>
+            </details>
+
+        </section>
+
+
+        <section id="preset-guide">
+
+            <h3>Selected Machine</h3>
+
+            <div class="preset-info" data-preset="binary">
+                <h4>Binary Increment</h4>
+                <p>In Turing machines, binary increment is an operation 
+                that adds 1 to a binary number on the tape by scanning 
+                to the rightmost bit and moving left to propagate
+                the carry—flipping 1s to 0s until it turns a 0 
+                (or a leading blank space) into a 1 and halts. </p>
+                <small>Example: 1011 → 1100</small>
+            </div>
+
+            <div class="preset-info" data-preset="multiplication">
+                <h4>Unary Multiplication</h4>
+                <p>In Turing machines, integer multiplication is 
+                an arithmetic operation that computes the product 
+                of two integers encoded on the tape—most commonly
+                in unary or binary notation—by systematically 
+                repeating addition. Depending on the encoding, the machine 
+                typically achieves this by copying the multiplicand onto a
+                separate section of the tape once for each unit of the multiplier 
+                (for unary), or by using bit-shifting and conditional binary 
+                addition (for binary) until the multiplier is reduced to
+                zero and only the final product remains.</p>
+                <small>3 x 4 | Input: 11101111</small>
+            </div>
+
+            <div class="preset-info" data-preset="addition">
+                <h4>Unary Addition</h4>
+                <p>In Turing machines, unary addition is an 
+                operation that adds two numbers represented 
+                as strings of 1s separated by a delimiter 
+                by replacing the separator with a 1 and 
+                erasing the final 1 at the end of the combined string.</p>
+                <small>111011 → 11111</small>
+            </div>
+
+            <div class="preset-info" data-preset="custom">
+                <h4>Custom Turing Machine</h4>
+                <p>Loaded from a JSON configuration file.</p>
+            </div>
+
+        </section>
+
+        <section id="select">
+
+            <fieldset id="machine-selection">
+
+                <legend>1. Select a Turing Machine</legend>
+
+                <div class="machine-option">
+                    <input
+                        type="radio"
+                        name="machine"
+                        id="machine1"
+                        value="binary"
+                    >
+
+                    <label for="machine1">
+                        <strong>Binary Increment</strong>
+                        <small>Adds 1 to a binary number</small>
+                    </label>
+                </div>
+
+                <div class="machine-option">
+                    <input
+                        type="radio"
+                        name="machine"
+                        id="machine2"
+                        value="multiplication"
+                        checked
+                    >
+
+                    <label for="machine2">
+                        <strong>Integer Multiplication</strong>
+                        <small>Multiplies two unary numbers</small>
+                    </label>
+                </div>
+
+                <div class="machine-option">
+                    <input
+                        type="radio"
+                        name="machine"
+                        id="machine3"
+                        value="addition"
+                    >
+
+                    <label for="machine3">
+                        <strong>Unary Addition</strong>
+                        <small>Adds two unary numbers</small>
+                    </label>
+                </div>
+
+            </fieldset>
+
+            <section id="input-section">
+
+                <h2>2. Input String</h2>
+
+                <label for="input_string">Machine Input</label>
+
+                <input
+                    type="text"
+                    name="input_string"
+                    id="input_string"
+                    placeholder="Enter a string"
+                    value="11101111"
+                    autocomplete="off"
+                    spellcheck="false"
+                >
+
+                <p id="input-example">
+                    Example: 3 x 4 | Input: 11101111
+                </p>
+
+            </section>
+
+            <section id="settings">
+
+                <h2>3. Execution Settings</h2>
+
+                <div class="setting-row">
+
+                    <label for="max-steps">Max Steps:</label>
+
+                    <input
+                        type="number"
+                        id="max-steps"
+                        value="10000"
+                        min="1"
+                        step="1"
+                    >
+
+                </div>
+
+                <div class="setting-row">
+
+                    <label for="speed">Speed:</label>
+
+                    <div class="speed-control">
+
+                        <input
+                            type="range"
+                            id="speed"
+                            min="1"
+                            max="10"
+                            value="5"
+                        >
+
+                        <output id="speed-value" for="speed">
+                            5 steps/s
+                        </output>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <section id="actions">
+
+                <button type="button" id="run-btn">
+                    Run
+                </button>
+
+                <button type="button" id="reset-btn">
+                    Reset
+                </button>
+
+            </section>
+
+            <section class="custom-machine-section">
+
+                <h3>4. Custom Turing Machine</h3>
+
+                <p>
+                    Upload your own machine configuration
+                    using a JSON file.
+                </p>
+
+                <label for="json-file">
+                    Select JSON File
+                </label>
+
+                <input
+                    type="file"
+                    id="json-file"
+                    accept=".json,application/json"
+                >
+
+                <button type="button" id="load-btn">
+                    Load JSON
+                </button>
+
+            </section>
+
+        </section>
+
+        <section id="simulator">
+
+            <section id="machine-info">
+
+                <div class="machine-information">
+
+                    <div class="machine-heading">
+
+                        <h2 id="machine-title">
+                            Turing Machine
+                        </h2>
+
+                        <output id="machine-type">
+                            Preset
+                        </output>
+
+                    </div>
+                    
+                    <div
+                        id="machine-details"
+                        class="machine-details"
+                    ></div>
+
+                </div>
+
+                <div id="machine-status">
+
+                    <p>
+                        Current State:
+                        <output id="current-state">q0</output>
+                    </p>
+
+                    <p>
+                        Step:
+                        <output id="step-count">0</output>
+                    </p>
+
+                    <p>
+                        Status:
+                        <output id="status">Ready</output>
+                    </p>
+
+                </div>
+
+            </section>
+
+            <section id="tape">
+
+                <h3>Tape:</h3>
+
+                <div
+                    id="tape-content"
+                    aria-label="Turing Machine tape"
+                ></div>
+
+            </section>
+
+            <section id="inside_setting">
+
+                <button type="button" id="play-btn">
+                    Play
+                </button>
+
+                <button type="button" id="pause-btn">
+                    Pause
+                </button>
+
+                <button type="button" id="step-btn">
+                    Step
+                </button>
+
+            </section>
+
+            <section id="trace">
+
+                <h3>Execution Trace (Transition Log)</h3>
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>Step</th>
+                                <th>Current State</th>
+                                <th>Read</th>
+                                <th>Write</th>
+                                <th>Move</th>
+                                <th>Next State</th>
+                                <th>Tape (window)</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="trace-body"></tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+            <section id="terminal">
+
+                <h3>ASCII Execution (Terminal View)</h3>
+
+                <pre id="terminal-content"></pre>
+
+            </section>
+
+        </section>
+
+    </main>
+
+
+</body>
+</html>

@@ -23,10 +23,11 @@ async function loadPresets() {
 
     try {
 
-        const response = await fetch("./presets.json");
+        const response = await fetch(
+            `${import.meta.env.BASE_URL}presets.json`);
 
         if (!response.ok) {
-            throw new Error("Unable to load presets.json");
+            throw new Error(`Failed to load presets: ${response.status}`);
         }
 
         presets = await response.json();

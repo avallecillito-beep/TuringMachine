@@ -1,0 +1,233 @@
+
+{
+    "binary": {
+        "name": "Binary Increment",
+        "description": "Adds 1 to a binary number.",
+
+        "states": [
+            "q0",
+            "q1",
+            "q_accept",
+            "q_reject"
+        ],
+
+        "inputAlphabet": ["0", "1"],
+        "tapeAlphabet": ["0", "1", "_"],
+
+        "blank": "_",
+
+        "startState": "q0",
+        "acceptState": "q_accept",
+        "rejectState": "q_reject",
+
+        "transitions": {
+            "q0": {
+                "0": {
+                    "write": "0",
+                    "move": "R",
+                    "nextState": "q0"
+                },
+                "1": {
+                    "write": "1",
+                    "move": "R",
+                    "nextState": "q0"
+                },
+                "_": {
+                    "write": "_",
+                    "move": "L",
+                    "nextState": "q1"
+                }
+            },
+
+            "q1": {
+                "1": {
+                    "write": "0",
+                    "move": "L",
+                    "nextState": "q1"
+                },
+                "0": {
+                    "write": "1",
+                    "move": "S",
+                    "nextState": "q_accept"
+                },
+                "_": {
+                    "write": "1",
+                    "move": "S",
+                    "nextState": "q_accept"
+                }
+            }
+        }
+    },
+
+    "addition": {
+        "name": "Unary Addition",
+        "description": "Adds two positive unary numbers separated by 0.",
+
+        "states": [
+            "q0",
+            "q1",
+            "q2",
+            "q_accept",
+            "q_reject"
+        ],
+
+        "inputAlphabet": ["0", "1"],
+        "tapeAlphabet": ["0", "1", "_"],
+
+        "blank": "_",
+
+        "startState": "q0",
+        "acceptState": "q_accept",
+        "rejectState": "q_reject",
+
+        "transitions": {
+            "q0": {
+                "1": {
+                    "write": "1",
+                    "move": "R",
+                    "nextState": "q0"
+                },
+                "0": {
+                    "write": "1",
+                    "move": "R",
+                    "nextState": "q1"
+                }
+            },
+
+            "q1": {
+                "1": {
+                    "write": "1",
+                    "move": "R",
+                    "nextState": "q1"
+                },
+                "_": {
+                    "write": "_",
+                    "move": "L",
+                    "nextState": "q2"
+                }
+            },
+
+            "q2": {
+                "1": {
+                    "write": "_",
+                    "move": "S",
+                    "nextState": "q_accept"
+                }
+            }
+        }
+    },
+
+    "multiplication": {
+        "name": "Unary Multiplication",
+        "description": "Multiplies two positive unary numbers using repeated copying.",
+
+        "states": [
+            "q_init",
+            "q_back",
+            "q_find_a",
+            "q_sep",
+            "q_find_b",
+            "q_hash",
+            "q_end",
+            "q_return_hash",
+            "q_return_b",
+            "q_restore",
+            "q_return_a",
+            "q_clean_left",
+            "q_clean_right",
+            "q_clean_b",
+            "q_accept",
+            "q_reject"
+        ],
+
+        "inputAlphabet": ["0", "1"],
+        "tapeAlphabet": ["0", "1", "X", "Y", "#", "_"],
+
+        "blank": "_",
+        "startState": "q_init",
+        "acceptState": "q_accept",
+        "rejectState": "q_reject",
+
+        "transitions": {
+            "q_init": {
+                "1": {"write": "1", "move": "R", "nextState": "q_init"},
+                "0": {"write": "0", "move": "R", "nextState": "q_init"},
+                "_": {"write": "#", "move": "L", "nextState": "q_back"}
+            },
+
+            "q_back": {
+                "1": {"write": "1", "move": "L", "nextState": "q_back"},
+                "0": {"write": "0", "move": "L", "nextState": "q_back"},
+                "_": {"write": "_", "move": "R", "nextState": "q_find_a"}
+            },
+
+            "q_find_a": {
+                "X": {"write": "X", "move": "R", "nextState": "q_find_a"},
+                "1": {"write": "X", "move": "R", "nextState": "q_sep"},
+                "0": {"write": "0", "move": "L", "nextState": "q_clean_left"}
+            },
+
+            "q_sep": {
+                "1": {"write": "1", "move": "R", "nextState": "q_sep"},
+                "X": {"write": "X", "move": "R", "nextState": "q_sep"},
+                "0": {"write": "0", "move": "R", "nextState": "q_find_b"}
+            },
+
+            "q_find_b": {
+                "Y": {"write": "Y", "move": "R", "nextState": "q_find_b"},
+                "1": {"write": "Y", "move": "R", "nextState": "q_hash"},
+                "#": {"write": "#", "move": "L", "nextState": "q_restore"}
+            },
+
+            "q_hash": {
+                "1": {"write": "1", "move": "R", "nextState": "q_hash"},
+                "Y": {"write": "Y", "move": "R", "nextState": "q_hash"},
+                "#": {"write": "#", "move": "R", "nextState": "q_end"}
+            },
+
+            "q_end": {
+                "1": {"write": "1", "move": "R", "nextState": "q_end"},
+                "_": {"write": "1", "move": "L", "nextState": "q_return_hash"}
+            },
+
+            "q_return_hash": {
+                "1": {"write": "1", "move": "L", "nextState": "q_return_hash"},
+                "#": {"write": "#", "move": "L", "nextState": "q_return_b"}
+            },
+
+            "q_return_b": {
+                "1": {"write": "1", "move": "L", "nextState": "q_return_b"},
+                "Y": {"write": "Y", "move": "L", "nextState": "q_return_b"},
+                "0": {"write": "0", "move": "R", "nextState": "q_find_b"}
+            },
+
+            "q_restore": {
+                "Y": {"write": "1", "move": "L", "nextState": "q_restore"},
+                "1": {"write": "1", "move": "L", "nextState": "q_restore"},
+                "0": {"write": "0", "move": "L", "nextState": "q_return_a"}
+            },
+
+            "q_return_a": {
+                "X": {"write": "X", "move": "L", "nextState": "q_return_a"},
+                "1": {"write": "1", "move": "L", "nextState": "q_return_a"},
+                "_": {"write": "_", "move": "R", "nextState": "q_find_a"}
+            },
+
+            "q_clean_left": {
+                "X": {"write": "_", "move": "L", "nextState": "q_clean_left"},
+                "_": {"write": "_", "move": "R", "nextState": "q_clean_right"}
+            },
+
+            "q_clean_right": {
+                "_": {"write": "_", "move": "R", "nextState": "q_clean_right"},
+                "0": {"write": "_", "move": "R", "nextState": "q_clean_b"}
+            },
+
+            "q_clean_b": {
+                "1": {"write": "_", "move": "R", "nextState": "q_clean_b"},
+                "#": {"write": "_", "move": "R", "nextState": "q_accept"}
+            }
+        }
+    }
+
+}

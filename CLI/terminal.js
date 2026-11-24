@@ -11,7 +11,7 @@ const rl = readline.createInterface({
 });
 
 // Resolve paths relative to this file
-const presetsPath = new URL("../presets.json", import.meta.url);
+const presetsPath = new URL("../public/presets.json", import.meta.url);
 
 // Terminal menu options
 const machineOptions = {
