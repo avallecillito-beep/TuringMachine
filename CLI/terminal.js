@@ -46,7 +46,7 @@ function showMenu() {
 
     console.log("1. Binary Increment");
     console.log("2. Unary Addition");
-    console.log("3. Unary Multiplication");
+    console.log("3. Integer Multiplication");
     console.log("4. Load Custom JSON");
     console.log("5. Exit");
 }
