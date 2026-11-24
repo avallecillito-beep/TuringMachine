@@ -86,7 +86,6 @@ function initializeMachine() {
 
         machine.maxSteps = maxSteps;
 
-        // 8. Update all visualizations
         renderTape(machine);
         renderMachineStatus(machine);
         renderTrace(machine);
