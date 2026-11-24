@@ -2,8 +2,6 @@
 import readline from "node:readline/promises";
 import { stdin as input, stdout as output } from "node:process";
 import { readFile } from "node:fs/promises";
-import { fileURLToPath } from "node:url";
-
 import { TuringMachine } from "../js/turingMachine.js";
 
 // Create the terminal input/output interface
