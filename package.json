@@ -3,7 +3,13 @@
     "version": "1.0.0",
     "type": "module",
     "scripts": {
-        "test": "node JS/test.js",
-        "cli": "node CLI/terminal.js"
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "node JS/test.js",
+    "cli": "node CLI/terminal.js"
+    },
+    "devDependencies": {
+        "vite": "^8.3.8"
     }
 }
