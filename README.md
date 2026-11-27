@@ -2,6 +2,13 @@
 
 **Theory of Computation — Final Project | Fall 2026 -- Alexis Vallecillo , Brandon Cano**
 
+## Live Demo
+
+The Turing Machine Simulator is publicly available online.
+No installation or account registration is required.
+
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Launch_Simulator-blue?style=for-the-badge&logo=vercel)](https://turing-machine-1x8q5540l-av-b69b.vercel.app)
+
 ## Project Overview
 
 For this final project, we developed an interactive Turing Machine simulator in JavaScript. our goal was to connect the theoretical 7-tuple definition of a Turing Machine with a working program that reads symbols, follows transition rules, changes states, and moves a tape head. The simulator has a browser-based graphical interface and an independent Node.js command-line interface (CLI). we used ChatGPT as a learning and programming assistant while building, debugging, and testing the project; the design decisions and implementation were developed through an iterative student-led process.
