@@ -7,7 +7,7 @@
 The Turing Machine Simulator is publicly available online.
 No installation or account registration is required.
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-Launch_Simulator-blue?style=for-the-badge&logo=vercel)](https://turing-machine-1x8q5540l-av-b69b.vercel.app)
+[Launch Turing Machine Simulator](https://turing-machine-1x8q5540l-av-b69b.vercel.app)
 
 ## Project Overview
 
